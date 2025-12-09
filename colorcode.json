@@ -1,0 +1,193 @@
+{
+    "design_system_name": "Minimal Dark Gradient Portfolio",
+    "design_intent": {
+        "purpose": "High-end personal portfolio / agency showcase",
+        "tone": "Confident, modern, premium, minimalist",
+        "emotional_goal": [
+            "clarity",
+            "focus",
+            "professional authority"
+        ],
+        "visual_density": "low",
+        "interaction_style": "subtle motion, hover emphasis, restrained animation"
+    },
+    "color_system": {
+        "mode": "dark",
+        "base_palette": {
+            "background_primary": "#0A0A0A",
+            "background_secondary": "#111214",
+            "surface_card": "#16181B",
+            "border_subtle": "#222326"
+        },
+        "text_palette": {
+            "text_primary": "#FFFFFF",
+            "text_secondary": "#C7C9CC",
+            "text_muted": "#8A8D91"
+        },
+        "accent_palette": {
+            "accent_primary": "#8F3CFF",
+            "accent_secondary": "#C084FC",
+            "accent_gradient": {
+                "type": "linear",
+                "angle": "90deg",
+                "from": "#8F3CFF",
+                "to": "#D946EF"
+            }
+        },
+        "usage_rules": {
+            "backgrounds": "remain nearly pure black for contrast",
+            "accents": "used sparingly to highlight keywords, borders, and interaction states",
+            "gradients": "never dominate layout; reserved for emphasis lines or focal text"
+        }
+    },
+    "typography": {
+        "font_classification": "Modern sans-serif",
+        "font_characteristics": [
+            "high x-height",
+            "clean geometric forms",
+            "neutral personality"
+        ],
+        "hierarchy": {
+            "hero_heading": {
+                "font_weight": 600,
+                "font_size": "clamp(48px, 8vw, 96px)",
+                "letter_spacing": "-0.02em",
+                "decoration": "outline or stroke effect"
+            },
+            "section_heading": {
+                "font_weight": 500,
+                "font_size": "clamp(28px, 4vw, 40px)"
+            },
+            "body_text": {
+                "font_weight": 400,
+                "font_size": "16px",
+                "line_height": 1.6
+            },
+            "metadata": {
+                "font_weight": 400,
+                "font_size": "14px",
+                "opacity": 0.7
+            }
+        },
+        "text_effects": {
+            "outline_text": {
+                "use_case": "hero identity emphasis",
+                "fill": "transparent",
+                "stroke": "1px solid text_primary"
+            },
+            "accent_highlight": {
+                "color": "accent_primary"
+            }
+        }
+    },
+    "layout_system": {
+        "container": {
+            "max_width": "1200px",
+            "horizontal_padding": "24px"
+        },
+        "grid": {
+            "desktop": "12-column",
+            "tablet": "8-column",
+            "mobile": "4-column"
+        },
+        "section_structure": [
+            "hero",
+            "about",
+            "services",
+            "portfolio",
+            "journal/blog",
+            "contact"
+        ],
+        "spacing_scale": {
+            "xs": "8px",
+            "sm": "16px",
+            "md": "32px",
+            "lg": "64px",
+            "xl": "96px"
+        },
+        "alignment_philosophy": {
+            "primary": "left-aligned content",
+            "secondary": "asymmetric balance with strong negative space"
+        }
+    },
+    "component_system": {
+        "cards": {
+            "border_radius": "16px",
+            "background": "surface_card",
+            "hover_behavior": {
+                "border_highlight": "accent_primary",
+                "elevation_change": "subtle"
+            },
+            "content_alignment": "horizontal split (label + description)"
+        },
+        "buttons": {
+            "shape": "pill",
+            "padding": "12px 20px",
+            "variants": [
+                "primary",
+                "secondary"
+            ],
+            "primary": {
+                "background": "neutral or accent gradient",
+                "text_color": "#FFFFFF"
+            },
+            "secondary": {
+                "background": "transparent",
+                "border": "1px solid text_primary"
+            }
+        },
+        "navigation": {
+            "type": "modal / overlay menu",
+            "trigger": "capsule button",
+            "menu_style": "vertical list on gradient-backed panel"
+        }
+    },
+    "interaction_patterns": {
+        "hover_states": [
+            "accent border reveal",
+            "slight brightness increase",
+            "micro motion (<150ms)"
+        ],
+        "scroll_behavior": {
+            "section_entry": "fade + slight translate",
+            "timing": "ease-out"
+        },
+        "focus_management": {
+            "keyboard_visible": true,
+            "outline_style": "accent_primary"
+        }
+    },
+    "iconography": {
+        "style": "line icons",
+        "stroke_weight": "consistent thin stroke",
+        "color": "text_secondary",
+        "usage_rule": "paired with short labels or numeric markers"
+    },
+    "content_logic": {
+        "tone": "concise, confident",
+        "line_length": "short paragraphs",
+        "number_highlights": {
+            "style": "large numerals",
+            "purpose": "credibility and experience emphasis"
+        }
+    },
+    "do_not_rules": [
+        "Do not use bright colors outside accent palette",
+        "Do not overcrowd sections with text",
+        "Do not mix serif fonts",
+        "Do not use heavy shadows"
+    ],
+    "ai_replication_guidance": {
+        "priority_signals": [
+            "contrast-first design",
+            "accent restraint",
+            "large typography with negative space"
+        ],
+        "acceptable_variations": [
+            "accent hue shift within purple-magenta range",
+            "card count per section",
+            "image placement styles"
+        ],
+        "consistency_anchor": "typography hierarchy + dark background discipline"
+    }
+}
