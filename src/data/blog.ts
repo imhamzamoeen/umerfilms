@@ -1,0 +1,208 @@
+// data/blog.ts
+
+export type BlogCategory =
+  | 'Tips & Tricks'
+  | 'Post-Production'
+  | 'Behind the Scenes'
+  | 'Equipment'
+  | 'Industry Insights';
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  featuredImage: string;
+  category: BlogCategory;
+  date: string;
+  readingTime: string;
+  author?: {
+    name: string;
+    avatar?: string;
+  };
+  tags?: string[];
+}
+
+const blogPosts: BlogPost[] = [
+  {
+    id: 'post-1',
+    title: '5 Tips for Cinematic Video Production',
+    slug: 'cinematic-video-production-tips',
+    excerpt:
+      'Learn the essential techniques to elevate your video production quality. From lighting setups to camera movements, these tips will transform your footage.',
+    content: `
+      <p>Creating cinematic video content requires more than just a good camera. It's about understanding the craft and applying proven techniques that filmmakers have used for decades.</p>
+
+      <h2>1. Master Your Lighting</h2>
+      <p>Lighting is arguably the most important element in cinematography. The way light falls on your subject can completely change the mood and quality of your footage. Start with three-point lighting and experiment from there.</p>
+
+      <h2>2. Use Camera Movement Purposefully</h2>
+      <p>Every camera movement should serve the story. Smooth dollies, subtle pushes, and motivated pans add production value. Invest in a good gimbal or slider to achieve professional results.</p>
+
+      <h2>3. Shoot in Log or RAW</h2>
+      <p>Shooting in a flat color profile gives you maximum flexibility in post-production. You can shape the look exactly how you want it in the color grade.</p>
+
+      <h2>4. Pay Attention to Audio</h2>
+      <p>Bad audio ruins good video. Invest in quality microphones and always monitor your levels. Clean audio is just as important as beautiful visuals.</p>
+
+      <h2>5. Tell a Story</h2>
+      <p>Technical perfection means nothing without emotional connection. Every shot should contribute to the narrative you're building.</p>
+    `,
+    featuredImage: '/images/blog/cinematic-tips.jpg',
+    category: 'Tips & Tricks',
+    date: '2024-03-15',
+    readingTime: '5 min read',
+    author: {
+      name: 'Umer Films',
+    },
+    tags: ['cinematography', 'tips', 'production'],
+  },
+  {
+    id: 'post-2',
+    title: 'The Art of Color Grading in Film',
+    slug: 'art-of-color-grading',
+    excerpt:
+      'Discover how color grading can dramatically change the mood and storytelling of your videos. A deep dive into professional color workflows.',
+    content: `
+      <p>Color grading is where footage transforms into cinema. It's the final creative step that unifies your visuals and sets the emotional tone of your project.</p>
+
+      <h2>Understanding Color Theory</h2>
+      <p>Before diving into software, understand the basics of color theory. Complementary colors create contrast, while analogous colors create harmony. Use this knowledge to guide your creative decisions.</p>
+
+      <h2>The Color Grading Process</h2>
+      <h3>Primary Correction</h3>
+      <p>Start by balancing your footage. Correct exposure, white balance, and contrast to create a neutral starting point.</p>
+
+      <h3>Secondary Correction</h3>
+      <p>Target specific areas or colors for adjustment. This is where you shape skin tones, enhance skies, or isolate elements for creative effect.</p>
+
+      <h3>Creative Grade</h3>
+      <p>Apply your creative look. Whether it's a warm vintage feel or a cold, desaturated tone, this is where your vision comes to life.</p>
+
+      <h2>Popular Look Styles</h2>
+      <p>Teal and orange remains popular for its natural skin tone flattery. Film emulation LUTs recreate the look of classic film stocks. High contrast with lifted blacks is trending for modern commercials.</p>
+    `,
+    featuredImage: '/images/blog/color-grading.jpg',
+    category: 'Post-Production',
+    date: '2024-03-08',
+    readingTime: '7 min read',
+    author: {
+      name: 'Umer Films',
+    },
+    tags: ['color-grading', 'post-production', 'davinci-resolve'],
+  },
+  {
+    id: 'post-3',
+    title: 'Behind the Scenes: Wedding Filmmaking',
+    slug: 'behind-scenes-wedding-filmmaking',
+    excerpt:
+      'An inside look at capturing the perfect wedding day moments. Learn about preparation, equipment choices, and storytelling techniques.',
+    content: `
+      <p>Wedding filmmaking is one of the most rewarding—and challenging—forms of video production. You get one chance to capture moments that will be treasured for generations.</p>
+
+      <h2>Pre-Wedding Preparation</h2>
+      <p>Scout the venue beforehand. Know where the best light will be, identify potential shooting locations, and plan your coverage strategy. Create a shot list but remain flexible.</p>
+
+      <h2>Essential Equipment</h2>
+      <ul>
+        <li>Two camera bodies minimum (backup is crucial)</li>
+        <li>Fast zoom lenses (24-70mm, 70-200mm)</li>
+        <li>Prime lens for low light (35mm or 50mm f/1.4)</li>
+        <li>External audio recorder and wireless lavs</li>
+        <li>Monopod or gimbal for ceremony coverage</li>
+      </ul>
+
+      <h2>Capturing Authentic Moments</h2>
+      <p>The best wedding films feel genuine because they capture real emotions. Don't over-direct. Observe, anticipate, and be ready when magic happens.</p>
+
+      <h2>Telling the Story</h2>
+      <p>A wedding film is more than documentation—it's storytelling. Focus on the details that make each couple unique. The way they look at each other, the tears of joy, the laughter with friends.</p>
+    `,
+    featuredImage: '/images/blog/wedding-bts.jpg',
+    category: 'Behind the Scenes',
+    date: '2024-02-28',
+    readingTime: '6 min read',
+    author: {
+      name: 'Umer Films',
+    },
+    tags: ['wedding', 'behind-the-scenes', 'filmmaking'],
+  },
+  {
+    id: 'post-4',
+    title: 'Drone Cinematography: A Complete Guide',
+    slug: 'drone-cinematography-guide',
+    excerpt:
+      'Master aerial videography with this comprehensive guide covering regulations, techniques, and creative applications for stunning drone footage.',
+    content: `
+      <p>Drone cinematography has revolutionized video production, making aerial shots accessible to creators at every level. Here's everything you need to know to get started.</p>
+
+      <h2>Understanding Regulations</h2>
+      <p>Before you fly, understand your local laws. In the US, the FAA requires Part 107 certification for commercial drone pilots. Many areas have no-fly zones near airports and government buildings.</p>
+
+      <h2>Choosing Your Drone</h2>
+      <p>For professional work, the DJI Mavic 3 or Inspire series are industry standards. Consider sensor size, flight time, and obstacle avoidance features when making your choice.</p>
+
+      <h2>Essential Shots</h2>
+      <h3>Reveal</h3>
+      <p>Start on an object, then pull back to reveal the landscape. One of the most dramatic uses of aerial footage.</p>
+
+      <h3>Orbit</h3>
+      <p>Circle around a subject while keeping it centered. Great for showing scale and context.</p>
+
+      <h3>Top Down</h3>
+      <p>Shooting straight down creates abstract, graphic compositions that are impossible from ground level.</p>
+
+      <h2>Post-Production Tips</h2>
+      <p>Drone footage often needs stabilization and color correction. Log profiles give you room to match aerial shots with ground footage.</p>
+    `,
+    featuredImage: '/images/blog/drone-guide.jpg',
+    category: 'Equipment',
+    date: '2024-02-20',
+    readingTime: '8 min read',
+    author: {
+      name: 'Umer Films',
+    },
+    tags: ['drone', 'aerial', 'equipment', 'tutorials'],
+  },
+];
+
+export function getAllBlogPosts(): BlogPost[] {
+  return blogPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+export function getBlogPosts(limit?: number): BlogPost[] {
+  const sorted = getAllBlogPosts();
+  return limit ? sorted.slice(0, limit) : sorted;
+}
+
+export function getBlogPostBySlug(slug: string): BlogPost | undefined {
+  return blogPosts.find((post) => post.slug === slug);
+}
+
+export function getBlogPostsByCategory(category: BlogCategory): BlogPost[] {
+  return blogPosts
+    .filter((post) => post.category === category)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+}
+
+export function getRelatedBlogPosts(currentPostId: string, category: BlogCategory, limit: number = 3): BlogPost[] {
+  const sameCategoryPosts = blogPosts
+    .filter((post) => post.id !== currentPostId && post.category === category)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  if (sameCategoryPosts.length >= limit) {
+    return sameCategoryPosts.slice(0, limit);
+  }
+
+  const otherPosts = blogPosts
+    .filter((post) => post.id !== currentPostId && post.category !== category)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  return [...sameCategoryPosts, ...otherPosts].slice(0, limit);
+}
+
+export function getAllCategories(): BlogCategory[] {
+  const categories = new Set(blogPosts.map((post) => post.category));
+  return Array.from(categories);
+}

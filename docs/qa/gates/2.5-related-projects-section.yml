@@ -1,0 +1,191 @@
+# <!-- Powered by BMAD™ Core -->
+# Quality Gate Decision for Story 2.5: Related Projects Section
+
+schema: 1
+story: "2.5"
+story_title: "Related Projects Section"
+gate: PASS
+status_reason: "All 7 acceptance criteria met with comprehensive test coverage (17 tests: 11 component + 6 data layer), clean separation of concerns, smart category-prioritization algorithm, and seamless integration with existing components."
+reviewer: "Quinn (Test Architect)"
+updated: "2025-12-14T01:26:00Z"
+
+waiver: { active: false }
+
+top_issues: []
+
+risk_summary:
+  totals: { critical: 0, high: 0, medium: 0, low: 0 }
+  recommendations:
+    must_fix: []
+    monitor: []
+
+# Extended fields
+quality_score: 100
+expires: "2025-12-28T00:00:00Z"
+
+evidence:
+  tests_reviewed: 17
+  risks_identified: 0
+  trace:
+    ac_covered: [1, 2, 3, 4, 5, 6, 7]
+    ac_gaps: []
+
+nfr_validation:
+  security:
+    status: PASS
+    notes: "Data from trusted static data layer (getRelatedProjects), no user input, type-safe implementation, no XSS risks"
+  performance:
+    status: PASS
+    notes: "Static data (no runtime API calls), lazy loading via ProjectCard (Next.js Image), showPreview={false} reduces video overhead, fast tests (318ms for 11 component tests), efficient sorted filtering"
+  reliability:
+    status: PASS
+    notes: "Empty state handling (returns null), type safety, 17 comprehensive tests, edge cases tested (empty array, category priority, limit enforcement)"
+  maintainability:
+    status: PASS
+    notes: "Clean 46-line component, excellent 2.7:1 test-to-code ratio, clear structure, reusable data layer function, well-documented"
+
+recommendations:
+  immediate: []
+  future:
+    - action: "Consider adding category-based dynamic heading (e.g., 'More Commercials')"
+      refs: ["src/components/portfolio/RelatedProjects.tsx:30-32"]
+    - action: "Consider adding 'View All Work' link at bottom of section"
+      refs: ["src/components/portfolio/RelatedProjects.tsx:41"]
+    - action: "Consider adding animation/transition when projects appear"
+      refs: ["src/components/portfolio/RelatedProjects.tsx:33-41"]
+
+# Review details
+review_highlights:
+  - "Smart category-prioritization algorithm: same category first, then others, sorted by order"
+  - "17 comprehensive tests (11 component + 6 data layer) with 100% pass rate"
+  - "Clean separation: data layer (getRelatedProjects) + presentation (RelatedProjects)"
+  - "Reuses ProjectCard from Story 2.2 - excellent component reuse"
+  - "Empty state handling: returns null gracefully when no related projects"
+  - "showPreview={false} prevents video conflicts with main project video"
+  - "bg-surface background provides visual separation from main content"
+  - "PageWrapper integration ensures consistent layout and max-width"
+  - "Responsive grid: 1/2/3 columns based on viewport (mobile-first)"
+  - "Excellent 2.7:1 test-to-code ratio (173 test lines vs 65 implementation lines)"
+
+code_quality_metrics:
+  related_projects_component_lines: 46
+  get_related_projects_function_lines: 19
+  total_implementation_lines: 65
+  component_test_lines: 173
+  test_to_code_ratio: 2.7
+  component_test_count: 11
+  data_layer_test_count: 6
+  total_test_count: 17
+  component_test_execution_time_ms: 292
+  data_layer_test_execution_time_ms: 26
+  average_component_test_time_ms: 26.5
+  average_data_layer_test_time_ms: 4.3
+  typescript_strict_mode: true
+  eslint_issues: 0
+  build_success: true
+
+integration_quality:
+  story_2_1_data_layer: "Uses getProjectsByCategory and getAllProjects ✅"
+  story_2_2_project_card: "Reuses ProjectCard component ✅"
+  story_2_4_detail_page: "Integrated into Project Detail Page ✅"
+  story_1_1_layout: "Uses PageWrapper for consistent layout ✅"
+
+test_architecture:
+  component_tests:
+    count: 11
+    execution_time_ms: 292
+    coverage:
+      - "Section heading rendering"
+      - "ProjectCard rendering for each project"
+      - "Empty state (returns null)"
+      - "Responsive grid classes"
+      - "PageWrapper usage"
+      - "Props passing to getRelatedProjects"
+      - "Default limit value (3)"
+      - "Responsive typography"
+      - "Proper spacing (py-16 md:py-20)"
+      - "bg-surface background"
+      - "showPreview={false} prop"
+  data_layer_tests:
+    count: 6
+    execution_time_ms: 26
+    coverage:
+      - "Returns projects from same category first"
+      - "Fills with other projects if fewer than limit"
+      - "Excludes current project by id"
+      - "Limits results to specified count"
+      - "Returns empty array if current is only project"
+      - "Sorts by order field (featured priority)"
+
+related_projects_algorithm:
+  step_1: "Filter same category projects (exclude current, sort by order)"
+  step_2: "If enough (>= limit), return same category only"
+  step_3: "Otherwise, filter other category projects (exclude current, sort by order)"
+  step_4: "Combine: same category first + others"
+  step_5: "Slice to limit (max 3 by default)"
+  complexity: "O(n log n) due to sorting, where n = total projects"
+  efficiency: "Efficient for static data, pre-sorted at build time"
+
+component_features:
+  empty_state_handling:
+    - "Returns null when relatedProjects.length === 0"
+    - "No placeholder or message shown"
+    - "Section completely hidden from DOM"
+  visual_design:
+    - "bg-surface background (visual separation)"
+    - "py-16 md:py-20 spacing (consistent with site)"
+    - "PageWrapper (max-width constraint)"
+    - "text-3xl md:text-4xl heading (responsive typography)"
+  grid_layout:
+    - "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+    - "gap-6 md:gap-8 (consistent with ProjectGrid)"
+    - "Mobile-first responsive design"
+  performance_optimizations:
+    - "showPreview={false} - no video preview on hover"
+    - "Lazy loading via ProjectCard (Next.js Image)"
+    - "Static data (no runtime API calls)"
+  client_component:
+    - "'use client' directive at top"
+    - "Necessary due to ProjectCard dependency"
+    - "No client-side state or interactivity"
+
+design_decisions:
+  show_preview_false:
+    decision: "Pass showPreview={false} to ProjectCard"
+    rationale: "Prevents video preview conflicts with main project video on detail page"
+    benefit: "Better UX, reduced video loading overhead, cleaner interaction"
+  bg_surface_background:
+    decision: "Use bg-surface for section background"
+    rationale: "Provides visual separation from main content area (bg-background)"
+    benefit: "Improves content hierarchy and visual structure"
+  more_work_heading:
+    decision: "Use 'More Work' instead of 'Related Projects'"
+    rationale: "Simple, clear, general - avoids over-specification"
+    benefit: "Concise, easy to understand, works for all project types"
+  page_wrapper_inclusion:
+    decision: "Include PageWrapper inside section"
+    rationale: "Ensures consistent max-width and horizontal padding"
+    benefit: "Layout consistency across site"
+  client_component_usage:
+    decision: "Mark component as 'use client'"
+    rationale: "ProjectCard is a client component (forwardRef, hover state)"
+    necessity: "Required - cannot use client component from server component"
+
+responsive_design:
+  breakpoints:
+    mobile: "Base styles (320px+) - 1 column"
+    tablet: "md: (768px+) - 2 columns"
+    desktop: "lg: (1024px+) - 3 columns"
+  typography:
+    heading: "text-3xl md:text-4xl font-bold"
+  spacing:
+    vertical_padding: "py-16 md:py-20"
+    heading_margin: "mb-8 md:mb-12"
+    grid_gap: "gap-6 md:gap-8"
+
+accessibility_features:
+  - "Semantic section element"
+  - "H2 heading for proper document outline"
+  - "ProjectCard handles individual card accessibility"
+  - "Keyboard navigation inherited from ProjectCard (Link component)"
+  - "Focus-visible styles inherited from ProjectCard"

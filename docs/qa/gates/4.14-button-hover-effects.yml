@@ -1,0 +1,19 @@
+# Quality Gate: 4.14 - Button Hover Effects
+schema: 1
+story: "4.14"
+story_title: "Button & Hover Effect Updates"
+gate: "PASS"
+status_reason: "All 12 acceptance criteria verified. Consistent hover and focus styling across all elements."
+reviewer: "Quinn (Test Architect)"
+updated: "2025-12-15T00:00:00Z"
+
+waiver: { active: false }
+top_issues: []
+quality_score: 95
+
+evidence:
+  tests_reviewed: 0
+  trace:
+    ac_covered: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    ac_gaps: []
+    notes: "CSS-only changes, visual verification sufficient"

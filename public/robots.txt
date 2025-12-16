@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://umerfilms.com
+
+# Sitemaps
+Sitemap: https://umerfilms.com/sitemap.xml

@@ -1,0 +1,22 @@
+# Quality Gate: 4.13 - Scroll Animations
+schema: 1
+story: "4.13"
+story_title: "Scroll Animations & Interactions"
+gate: "PASS"
+status_reason: "All 12 acceptance criteria verified. Excellent accessibility with reduced motion support."
+reviewer: "Quinn (Test Architect)"
+updated: "2025-12-15T00:00:00Z"
+
+waiver: { active: false }
+top_issues: []
+quality_score: 97
+
+evidence:
+  tests_reviewed: 10
+  trace:
+    ac_covered: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    ac_gaps: []
+
+nfr_validation:
+  accessibility: { status: PASS, notes: "useReducedMotion hook, prefers-reduced-motion CSS" }
+  performance: { status: PASS, notes: "viewport once: true for single-trigger" }

@@ -1,26 +1,400 @@
 @import "tailwindcss";
 
+/*
+ * UmerFilms Design Tokens
+ * Dark-first theme for videographer portfolio
+ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Core Colors - Dark Theme (Default) */
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --surface: #171717;
+  --surface-elevated: #262626;
+  --muted: #a3a3a3;
+
+  /* Accent Colors - Purple-Pink Gradient */
+  --accent-primary: #450E93;    /* Deep violet */
+  --accent-secondary: #D5007F;  /* Hot magenta/pink */
+  --accent: #D5007F;            /* Primary accent for solid color usage */
+  --accent-hover: #e6009a;      /* Lighter pink for hover states */
+
+  /* Gradient Definitions */
+  --gradient-accent: linear-gradient(135deg, #450E93 0%, #D5007F 100%);
+  --gradient-accent-hover: linear-gradient(135deg, #5a1bb8 0%, #e6009a 100%);
+
+  /* Border Colors */
+  --border: #262626;
+  --border-muted: #404040;
+
+  /* Typography (Story 4.15) */
+  --letter-spacing-label: 0.12em;
+  --line-height-body: 1.6;
+  --line-height-heading: 1.2;
+
+  /* Spacing Rhythm (Story 4.15) */
+  --section-padding-y: clamp(4rem, 8vw, 8rem);
+  --section-padding-x: clamp(1.5rem, 4vw, 2rem);
+  --card-padding: clamp(1.5rem, 3vw, 3rem);
+  --element-gap: 1.5rem;
+  --element-gap-sm: 1rem;
+  --element-gap-lg: 2rem;
+
+  /* Legacy spacing */
+  --spacing-page: clamp(1rem, 5vw, 2rem);
+
+  /* Border Radius Tokens */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
 }
 
 @theme inline {
+  /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-border: var(--border);
+  --color-border-muted: var(--border-muted);
+
+  /* Typography */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Border Radius */
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-full: var(--radius-full);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base Styles */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* Focus Styles for Accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Selection Styles */
+::selection {
+  background: var(--accent);
+  color: var(--background);
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hero Heading - Outline Stroke Typography */
+.hero-heading {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-style: italic;
+  -webkit-text-stroke: 2px white;
+  -webkit-text-fill-color: transparent;
+  text-transform: none;
+  font-size: clamp(4rem, 10vw, 8rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* Swiper Navigation Arrows - Hidden for portfolio (using custom buttons) */
+.portfolio-swiper .swiper-button-next,
+.portfolio-swiper .swiper-button-prev {
+  display: none;
+}
+
+/* Default Swiper Navigation (for other swipers) */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #ffffff;
+  transition: all 0.3s ease;
+  width: 44px;
+  height: 44px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #D5007F;
+  transform: scale(1.1);
+}
+
+/* Swiper Pagination Bullets */
+.swiper-pagination-bullet {
+  background: #ffffff;
+  opacity: 0.3;
+  width: 10px;
+  height: 10px;
+  transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+  background: linear-gradient(135deg, #450e93 0%, #d5007f 100%);
+  opacity: 1;
+  width: 32px;
+  border-radius: 6px;
+}
+
+/* Ensure padding for pagination */
+.portfolio-swiper {
+    padding-bottom: 3.5rem !important;
+}
+
+/* Testimonials Swiper Styles */
+.testimonials-swiper .swiper-pagination {
+  position: relative;
+  margin-top: 2rem;
+}
+
+.testimonials-swiper .testimonial-bullet {
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  opacity: 0.4;
+  border-radius: 50%;
+  margin: 0 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.testimonials-swiper .testimonial-bullet-active {
+  background: linear-gradient(135deg, #450e93 0%, #d5007f 100%);
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* ===========================
+   Button Styles (Story 4.14)
+   =========================== */
+
+/* Primary Button - Outlined with gradient hover */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  padding: 0.75rem 2rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: linear-gradient(135deg, #450e93 0%, #d5007f 100%);
+  border-color: transparent;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(69, 14, 147, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary Button - Solid gradient */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #450e93 0%, #d5007f 100%);
+  border: none;
+  color: #ffffff;
+  padding: 0.75rem 2rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus-visible {
+  background: linear-gradient(135deg, #5a1bb8 0%, #e6009a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(69, 14, 147, 0.4);
+}
+
+/* Navigation Link with underline animation */
+.nav-link {
+  position: relative;
+  color: #ffffff;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(135deg, #450e93 0%, #d5007f 100%);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  width: 100%;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: #d5007f;
+}
+
+/* Card Hover Effects */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover,
+.card-hover:focus-within {
+  transform: scale(1.03) translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Image Zoom on Hover */
+.img-zoom {
+  overflow: hidden;
+}
+
+.img-zoom img {
+  transition: transform 0.5s ease;
+}
+
+.img-zoom:hover img {
+  transform: scale(1.05);
+}
+
+/* Gradient Text on Hover */
+.hover-gradient-text {
+  transition: all 0.3s ease;
+}
+
+.hover-gradient-text:hover {
+  background: linear-gradient(135deg, #450e93 0%, #d5007f 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Focus States - Enhanced visibility */
+*:focus-visible {
+  outline: 2px solid #d5007f;
+  outline-offset: 4px;
+}
+
+/* Skip focus outline for mouse users */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ===========================
+   Typography & Spacing (Story 4.15)
+   =========================== */
+
+/* Section Label - Uppercase with letter spacing */
+.section-label {
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-label);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* Section Padding Utility */
+.section-padding {
+  padding-top: var(--section-padding-y);
+  padding-bottom: var(--section-padding-y);
+  padding-left: var(--section-padding-x);
+  padding-right: var(--section-padding-x);
+}
+
+/* Card Padding Utility */
+.card-padding {
+  padding: var(--card-padding);
+}
+
+/* Line Height - Applied globally */
+body {
+  line-height: var(--line-height-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: var(--line-height-heading);
+}
+
+/* Element Gap Utilities */
+.gap-element {
+  gap: var(--element-gap);
+}
+
+.gap-element-sm {
+  gap: var(--element-gap-sm);
+}
+
+.gap-element-lg {
+  gap: var(--element-gap-lg);
+}
+
+/* Section Container */
+.section-container {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--section-padding-x);
+  padding-right: var(--section-padding-x);
+}
+
