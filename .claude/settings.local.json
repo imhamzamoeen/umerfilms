@@ -56,7 +56,15 @@
       "Bash(taskkill:*)",
       "Bash(timeout 15 bash:*)",
       "Bash(cat:*)",
-      "Bash(timeout 20 bash:*)"
+      "Bash(timeout 20 bash:*)",
+      "Bash(claude mcp add:*)",
+      "WebSearch",
+      "Bash(claude mcp remove:*)",
+      "Bash(npx:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)",
+      "Bash(timeout 10 npx:*)",
+      "Bash(claude mcp list:*)"
     ]
   }
 }

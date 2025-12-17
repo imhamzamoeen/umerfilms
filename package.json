@@ -12,6 +12,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.1",
+    "@supabase/mcp-server-supabase": "^0.5.10",
     "clsx": "^2.1.1",
     "focus-trap-react": "^11.0.4",
     "framer-motion": "^12.23.26",
