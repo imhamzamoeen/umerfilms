@@ -1,6 +1,8 @@
 // src/app/contact/page.tsx
 
 import { Metadata } from 'next';
+
+export const revalidate = 604800; // Revalidate every week (7 days)
 import { PageWrapper } from '@/components/layout';
 import { ContactForm } from '@/components/contact';
 

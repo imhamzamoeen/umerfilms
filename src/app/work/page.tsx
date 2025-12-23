@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const revalidate = 604800; // Revalidate every week (7 days)
 
 export default async function WorkPage() {
   const videos = await getAllVideos();

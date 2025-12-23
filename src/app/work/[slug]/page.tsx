@@ -14,7 +14,7 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const revalidate = 604800; // Revalidate every week (7 days)
 export const dynamicParams = true; // Generate pages on-demand
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

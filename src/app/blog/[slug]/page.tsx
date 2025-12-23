@@ -1,6 +1,8 @@
 // src/app/blog/[slug]/page.tsx
 
 import { notFound } from 'next/navigation';
+
+export const revalidate = 604800; // Revalidate every week (7 days)
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';

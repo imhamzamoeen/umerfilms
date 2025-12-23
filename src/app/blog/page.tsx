@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
 import { getAllBlogPosts } from '@/data/blog';
+
+export const revalidate = 604800; // Revalidate every week (7 days)
 import BlogHeader from '@/components/blog/BlogHeader';
 import BlogSearch from '@/components/blog/BlogSearch';
 

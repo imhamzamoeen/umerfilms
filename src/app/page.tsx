@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
 import dynamic from 'next/dynamic';
+
+export const revalidate = 604800; // Revalidate every week (7 days)
 import { HeroThreeColumn, IntroSection, CTASection } from "@/components/home";
 import { PortfolioSkeleton, SectionSkeleton } from "@/components/shared";
 

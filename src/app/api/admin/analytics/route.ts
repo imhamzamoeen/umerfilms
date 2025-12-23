@@ -73,8 +73,11 @@ export async function GET(request: NextRequest) {
   const token = process.env.VERCEL_API_TOKEN
   const projectId = process.env.VERCEL_PROJECT_ID
 
+  console.log('[Analytics] Token exists:', !!token, 'ProjectId exists:', !!projectId)
+
   if (!token || !projectId) {
     // Return mock data if Vercel API is not configured
+    console.log('[Analytics] Missing credentials, returning mock data')
     return NextResponse.json(getMockAnalyticsData(period))
   }
 
@@ -101,9 +104,12 @@ export async function GET(request: NextRequest) {
 
     // Check if any request failed
     if (!statsRes.ok) {
-      console.error('Vercel Analytics API error:', await statsRes.text())
+      const errorText = await statsRes.text()
+      console.error('[Analytics] Vercel API error:', statsRes.status, errorText)
       return NextResponse.json(getMockAnalyticsData(period))
     }
+
+    console.log('[Analytics] Successfully fetched from Vercel API')
 
     const [stats, timeseries, pages, referrers, countries, devices] = await Promise.all([
       statsRes.json(),

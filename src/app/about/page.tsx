@@ -1,6 +1,8 @@
 // src/app/about/page.tsx
 
 import { Metadata } from 'next';
+
+export const revalidate = 604800; // Revalidate every week (7 days)
 import Link from 'next/link';
 import { PageWrapper } from '@/components/layout';
 import { VideoPlayer } from '@/components/video';
