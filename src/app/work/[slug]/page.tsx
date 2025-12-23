@@ -2,27 +2,26 @@
 
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
-import { getProjectBySlug, getAllProjects } from '@/data/projects';
+import { getVideoBySlug, getAllVideos, getRelatedVideos } from '@/lib/videos';
+import { getTagsForVideo } from '@/lib/video-tags';
+import { videoToProject, videosToProjects } from '@/lib/video-to-project';
 import { ProjectHero, ProjectMeta, ProjectGallery } from '@/components/project';
 import { VideoPlayer } from '@/components/video';
 import { RelatedProjects } from '@/components/portfolio';
+import { getProjectGallery } from '@/lib/gallery';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function generateStaticParams() {
-  const projects = getAllProjects();
-  return projects.map((project) => ({
-    slug: project.slug,
-  }));
-}
+export const revalidate = 60; // Revalidate every 60 seconds
+export const dynamicParams = true; // Generate pages on-demand
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const video = await getVideoBySlug(slug);
 
-  if (!project) {
+  if (!video) {
     return {
       title: 'Project Not Found - UmerFilms',
       description: 'The requested project could not be found.',
@@ -30,12 +29,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `${project.title} | UmerFilms`,
-    description: project.description,
+    title: `${video.title} | UmerFilms`,
+    description: video.description || 'View this project on UmerFilms portfolio.',
     openGraph: {
-      title: project.title,
-      description: project.description,
-      images: [project.thumbnailUrl],
+      title: video.title,
+      description: video.description || 'View this project on UmerFilms portfolio.',
+      images: video.thumbnail_url ? [video.thumbnail_url] : [],
       type: 'website',
     },
   };
@@ -43,11 +42,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function ProjectDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const project = getProjectBySlug(slug);
+  const video = await getVideoBySlug(slug);
 
-  if (!project) {
+  if (!video) {
     notFound();
   }
+
+  // Get tags for this video
+  const tags = await getTagsForVideo(video.id);
+  const videoWithTags = { ...video, tags };
+
+  // Convert to Project format for existing components
+  const project = videoToProject(videoWithTags);
+
+  // Get related videos
+  const relatedVideos = await getRelatedVideos(video.id, video.category, 3);
+  const relatedProjects = videosToProjects(relatedVideos);
+
+  // Fetch gallery from Supabase
+  const dynamicGallery = await getProjectGallery(video.id);
+  const gallery = dynamicGallery.length > 0 ? dynamicGallery : [];
 
   return (
     <main className="bg-black min-h-screen">
@@ -60,28 +74,53 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           {/* Main Content */}
           <div className="lg:col-span-2">
             {/* Video Player */}
-            <div className="mb-8">
-              <div className="aspect-video bg-gray-900 rounded-lg overflow-hidden">
-                <VideoPlayer
-                  src={project.videoUrl}
-                  poster={project.thumbnailUrl}
-                  autoplay={false}
-                  className="w-full h-full"
-                />
+            {project.videoUrl && (
+              <div className="mb-8">
+                <div className="aspect-video bg-gray-900 rounded-lg overflow-hidden">
+                  <VideoPlayer
+                    src={project.videoUrl}
+                    poster={project.thumbnailUrl}
+                    autoplay={false}
+                    className="w-full h-full"
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Description */}
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold text-white mb-4">About This Project</h2>
-              <p className="text-lg text-gray-300 leading-relaxed">
-                {project.description}
-              </p>
-            </div>
+            {project.description && (
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold text-white mb-4">About This Project</h2>
+                <p className="text-lg text-gray-300 leading-relaxed">
+                  {project.description}
+                </p>
+              </div>
+            )}
+
+            {/* Tags */}
+            {tags.length > 0 && (
+              <div className="mb-8">
+                <h3 className="text-lg font-semibold text-white mb-3">Tags</h3>
+                <div className="flex flex-wrap gap-2">
+                  {tags.map((tag) => (
+                    <span
+                      key={tag.id}
+                      className="rounded-full px-3 py-1 text-sm font-medium"
+                      style={{
+                        backgroundColor: `${tag.color}20`,
+                        color: tag.color
+                      }}
+                    >
+                      {tag.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Gallery */}
-            {project.gallery && project.gallery.length > 0 && (
-              <ProjectGallery images={project.gallery} projectTitle={project.title} />
+            {gallery.length > 0 && (
+              <ProjectGallery images={gallery} projectTitle={project.title} />
             )}
           </div>
 
@@ -93,10 +132,37 @@ export default async function ProjectDetailPage({ params }: PageProps) {
       </div>
 
       {/* Related Projects */}
-      <RelatedProjects
-        currentProjectId={project.id}
-        category={project.category}
-      />
+      {relatedProjects.length > 0 && (
+        <section className="container mx-auto px-6 pb-16">
+          <h2 className="text-2xl font-bold text-white mb-8">Related Projects</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {relatedProjects.map((related) => (
+              <a
+                key={related.id}
+                href={`/work/${related.slug}`}
+                className="group block rounded-lg overflow-hidden bg-gray-900 transition-transform hover:scale-105"
+              >
+                <div className="aspect-video relative">
+                  {related.thumbnailUrl && (
+                    <img
+                      src={related.thumbnailUrl}
+                      alt={related.title}
+                      className="w-full h-full object-cover"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors" />
+                </div>
+                <div className="p-4">
+                  <h3 className="font-semibold text-white group-hover:text-amber-500 transition-colors">
+                    {related.title}
+                  </h3>
+                  <p className="text-sm text-gray-400">{related.category}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }

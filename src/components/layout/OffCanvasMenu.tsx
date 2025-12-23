@@ -13,6 +13,7 @@ interface OffCanvasMenuProps {
 const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/work', label: 'Work' },
+    { href: '/blog', label: 'Journal' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
 ];

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { BsArrowLeft, BsClock, BsCalendar } from 'react-icons/bs';
 import { getBlogPostBySlug, getAllBlogPosts, getRelatedBlogPosts } from '@/data/blog';
+import { getPortraitUrl } from '@/lib/settings';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -57,6 +58,9 @@ export default async function BlogPostPage({ params }: PageProps) {
     day: 'numeric',
   });
 
+  const defaultPortrait = await getPortraitUrl();
+  const authorImage = post.author?.avatar || defaultPortrait;
+
   return (
     <main className="bg-black min-h-screen">
       {/* Hero Section */}
@@ -75,7 +79,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           {/* Back Link */}
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-gray-300 hover:text-white transition-colors mb-6 focus:outline-none focus:ring-2 focus:ring-[#D5007F] focus:ring-offset-2 focus:ring-offset-black rounded"
+            className="inline-flex items-center gap-2 text-gray-300 hover:text-white transition-colors mb-6 focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:ring-offset-2 focus:ring-offset-black rounded"
             aria-label="Back to Blog"
           >
             <BsArrowLeft className="text-lg" aria-hidden="true" />
@@ -83,7 +87,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           </Link>
 
           {/* Category */}
-          <p className="text-sm uppercase tracking-widest text-[#D5007F] font-bold mb-4">
+          <p className="text-sm uppercase tracking-widest text-[#8B5CF6] font-bold mb-4">
             {post.category}
           </p>
 
@@ -95,11 +99,11 @@ export default async function BlogPostPage({ params }: PageProps) {
           {/* Meta */}
           <div className="flex flex-wrap items-center gap-4 text-gray-300">
             <span className="flex items-center gap-2">
-              <BsCalendar className="text-[#D5007F]" aria-hidden="true" />
+              <BsCalendar className="text-[#8B5CF6]" aria-hidden="true" />
               <time dateTime={post.date}>{formattedDate}</time>
             </span>
             <span className="flex items-center gap-2">
-              <BsClock className="text-[#D5007F]" aria-hidden="true" />
+              <BsClock className="text-[#8B5CF6]" aria-hidden="true" />
               <span>{post.readingTime}</span>
             </span>
           </div>
@@ -114,7 +118,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
             prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
             prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-6
-            prose-a:text-[#D5007F] prose-a:no-underline hover:prose-a:underline
+            prose-a:text-[#8B5CF6] prose-a:no-underline hover:prose-a:underline
             prose-strong:text-white
             prose-ul:text-gray-300 prose-li:mb-2
             prose-code:text-gray-300 prose-code:bg-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded"
@@ -142,16 +146,17 @@ export default async function BlogPostPage({ params }: PageProps) {
         {post.author && (
           <div className="mt-12 pt-8 border-t border-gray-800">
             <div className="flex items-center gap-4">
-              {post.author.avatar ? (
+              {authorImage ? (
                 <Image
-                  src={post.author.avatar}
+                  src={authorImage}
                   alt={post.author.name}
                   width={64}
                   height={64}
-                  className="rounded-full"
+                  className="rounded-full object-cover"
+                  unoptimized
                 />
               ) : (
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#450E93] to-[#D5007F] flex items-center justify-center text-white text-2xl font-bold">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#450E93] to-[#8B5CF6] flex items-center justify-center text-white text-2xl font-bold">
                   {post.author.name.charAt(0)}
                 </div>
               )}
@@ -174,7 +179,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 <Link
                   key={relatedPost.id}
                   href={`/blog/${relatedPost.slug}`}
-                  className="group block focus:outline-none focus:ring-2 focus:ring-[#D5007F] focus:ring-offset-2 focus:ring-offset-[#0A0A0A] rounded-lg"
+                  className="group block focus:outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:ring-offset-2 focus:ring-offset-[#0A0A0A] rounded-lg"
                 >
                   <div className="relative aspect-video overflow-hidden rounded-lg mb-4">
                     <Image
@@ -185,10 +190,10 @@ export default async function BlogPostPage({ params }: PageProps) {
                       sizes="(max-width: 768px) 100vw, 33vw"
                     />
                   </div>
-                  <p className="text-xs uppercase tracking-wider text-[#D5007F] font-bold mb-2">
+                  <p className="text-xs uppercase tracking-wider text-[#8B5CF6] font-bold mb-2">
                     {relatedPost.category}
                   </p>
-                  <h3 className="text-xl font-bold text-white group-hover:text-[#D5007F] transition-colors">
+                  <h3 className="text-xl font-bold text-white group-hover:text-[#8B5CF6] transition-colors">
                     {relatedPost.title}
                   </h3>
                   <p className="mt-2 text-sm text-gray-400">{relatedPost.readingTime}</p>

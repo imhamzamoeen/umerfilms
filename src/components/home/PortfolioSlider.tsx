@@ -4,9 +4,9 @@ import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Keyboard, A11y } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
-import Image from 'next/image';
-import { getAllProjects } from '@/data/projects';
-import { useMemo } from 'react';
+import Link from 'next/link';
+import type { Project } from '@/types/project';
+import { ProjectCard } from '@/components/portfolio';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -14,18 +14,32 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 interface PortfolioSliderProps {
-    onProjectClick?: (projectId: string) => void;
+    projects: Project[];
 }
 
-export default function PortfolioSlider({ onProjectClick }: PortfolioSliderProps) {
-    const projects = useMemo(() => getAllProjects(), []);
+export default function PortfolioSlider({ projects }: PortfolioSliderProps) {
     const swiperRef = useRef<SwiperType | null>(null);
 
+    if (projects.length === 0) {
+        return (
+            <section className="portfolio-slider bg-black py-24" aria-labelledby="portfolio-heading">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center">
+                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                            Recent <span className="text-[#D5007F]">Works</span>
+                        </h2>
+                        <p className="text-gray-400">No projects available yet. Add videos in the admin panel.</p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
+
     return (
-        <section className="portfolio-slider bg-black py-24" aria-labelledby="portfolio-heading">
-            <div className="container mx-auto px-6">
-                {/* Section Header */}
-                <div className="mb-12 text-center max-w-2xl mx-auto">
+        <section className="portfolio-slider bg-black py-16 md:py-24" aria-labelledby="portfolio-heading">
+            {/* Section Header - Constrained width */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+                <div className="text-center max-w-2xl mx-auto">
                     <div className="flex items-center justify-center gap-2 mb-4">
                         <span className="w-2 h-2 rounded-full bg-[#D5007F]"></span>
                         <p className="text-sm uppercase tracking-widest text-gray-400 font-medium">
@@ -36,7 +50,7 @@ export default function PortfolioSlider({ onProjectClick }: PortfolioSliderProps
                         Recent <span className="text-[#D5007F]">Works</span>
                     </h2>
                     <p className="text-gray-400 text-base md:text-lg leading-relaxed">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                        Explore our latest creative projects showcasing cinematic storytelling and visual excellence
                     </p>
 
                     {/* Custom Navigation Arrows */}
@@ -61,72 +75,85 @@ export default function PortfolioSlider({ onProjectClick }: PortfolioSliderProps
                         </button>
                     </div>
                 </div>
+            </div>
 
-                {/* Swiper Slider */}
+            {/* Full-width Swiper Container */}
+            <div className="w-full">
                 <Swiper
                     onSwiper={(swiper) => { swiperRef.current = swiper; }}
                     modules={[Navigation, Pagination, Keyboard, A11y]}
                     spaceBetween={20}
-                    slidesPerView={1.2}
+                    slidesPerView={1.1}
                     centeredSlides={false}
                     pagination={{ clickable: true }}
                     keyboard={{ enabled: true, onlyInViewport: true }}
                     speed={400}
                     grabCursor={true}
+                    slidesOffsetBefore={16}
+                    slidesOffsetAfter={16}
                     breakpoints={{
-                        640: {
-                            slidesPerView: 2.2,
+                        480: {
+                            slidesPerView: 1.2,
                             spaceBetween: 20,
+                            slidesOffsetBefore: 24,
+                            slidesOffsetAfter: 24,
+                        },
+                        640: {
+                            slidesPerView: 1.5,
+                            spaceBetween: 24,
+                            slidesOffsetBefore: 32,
+                            slidesOffsetAfter: 32,
+                        },
+                        768: {
+                            slidesPerView: 1.8,
+                            spaceBetween: 28,
+                            slidesOffsetBefore: 40,
+                            slidesOffsetAfter: 40,
                         },
                         1024: {
-                            slidesPerView: 3.5,
-                            spaceBetween: 24,
+                            slidesPerView: 2.2,
+                            spaceBetween: 32,
+                            slidesOffsetBefore: 48,
+                            slidesOffsetAfter: 48,
                         },
                         1280: {
-                            slidesPerView: 4,
-                            spaceBetween: 24,
+                            slidesPerView: 2.5,
+                            spaceBetween: 32,
+                            slidesOffsetBefore: 64,
+                            slidesOffsetAfter: 64,
+                        },
+                        1536: {
+                            slidesPerView: 3,
+                            spaceBetween: 36,
+                            slidesOffsetBefore: 80,
+                            slidesOffsetAfter: 80,
                         },
                     }}
-                    className="portfolio-swiper !pb-14 !overflow-visible"
+                    className="portfolio-swiper !pb-14"
                 >
-                    {projects.map((project) => (
+                    {projects.map((project, index) => (
                         <SwiperSlide key={project.id}>
-                            <div
-                                className="portfolio-slide group cursor-pointer"
-                                onClick={() => onProjectClick?.(project.id)}
-                                role="button"
-                                tabIndex={0}
-                                aria-label={`View project: ${project.title}`}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter' || e.key === ' ') {
-                                        onProjectClick?.(project.id);
-                                    }
-                                }}
-                            >
-                                {/* Project Image */}
-                                <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-gray-900 mb-4">
-                                    <Image
-                                        src={project.thumbnailUrl}
-                                        alt={`Thumbnail for ${project.title}`}
-                                        fill
-                                        sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 25vw"
-                                        className="object-cover transition-transform duration-500 will-change-transform group-hover:scale-105"
-                                    />
-                                </div>
-
-                                {/* Project Info - Always Visible */}
-                                <div className="space-y-2">
-                                    <p className="text-xs uppercase tracking-wider text-gray-400 font-medium">
-                                        {project.category.toUpperCase()} • VISUAL ART • CONCEPT
-                                    </p>
-                                    <h3 className="text-lg md:text-xl font-semibold text-white leading-tight group-hover:text-[#D5007F] transition-colors duration-300">
-                                        {project.title}
-                                    </h3>
-                                </div>
-                            </div>
+                            <ProjectCard
+                                project={project}
+                                priority={index < 3}
+                                showPreview={true}
+                            />
                         </SwiperSlide>
                     ))}
                 </Swiper>
+            </div>
+
+            {/* View All Link */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 text-center">
+                <Link
+                    href="/work"
+                    className="inline-flex items-center gap-2 px-8 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-black transition-all duration-300"
+                >
+                    View All Work
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </Link>
             </div>
         </section>
     );

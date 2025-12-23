@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import { Geist, Geist_Mono, Cinzel } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import { Navigation, Footer, TransitionLayout, SkipToContent } from "@/components/layout";
 import "./globals.css";
 
@@ -17,11 +18,10 @@ const geistMono = Geist_Mono({
   preload: true,
 });
 
-const playfairDisplay = Playfair_Display({
-  variable: "--font-playfair",
+const cinzel = Cinzel({
+  variable: "--font-cinzel",
   subsets: ["latin"],
   display: "swap",
-  style: ["normal", "italic"],
   weight: ["400", "700"],
 });
 
@@ -61,7 +61,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${playfairDisplay.variable} antialiased bg-background text-foreground`}
+        className={`${geistSans.variable} ${geistMono.variable} ${cinzel.variable} antialiased bg-background text-foreground`}
       >
         <SkipToContent />
         <TransitionLayout>
@@ -69,6 +69,7 @@ export default function RootLayout({
           <main id="main-content" className="pt-16">{children}</main>
           <Footer />
         </TransitionLayout>
+        <Analytics />
       </body>
     </html>
   );

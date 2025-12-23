@@ -5,8 +5,10 @@ import { SkillsList } from './SkillsList';
 import { CircularPortrait } from './CircularPortrait';
 import { Statistics } from './Statistics';
 import { biography, statistics } from '@/data/about';
+import { getPortraitUrl } from '@/lib/settings';
 
-export function HeroThreeColumn() {
+export async function HeroThreeColumn() {
+  const portraitUrl = await getPortraitUrl();
   return (
     <section
       className="relative min-h-screen w-full bg-black px-4 lg:px-8 pt-32 pb-16"
@@ -32,7 +34,7 @@ export function HeroThreeColumn() {
               <h2 className="text-sm uppercase tracking-widest text-white font-semibold mb-4">Connect</h2>
               <div className="flex gap-4">
                 <a
-                  href="https://instagram.com/umerfilms"
+                  href="https://www.instagram.com/umer.films"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all"
@@ -54,14 +56,25 @@ export function HeroThreeColumn() {
                   </svg>
                 </a>
                 <a
-                  href="https://tiktok.com/@umerfilms"
+                  href="https://www.linkedin.com/in/umerfilms"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all"
-                  aria-label="TikTok"
+                  aria-label="LinkedIn"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://www.threads.com/@umer.films"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white hover:text-black transition-all"
+                  aria-label="Threads"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.59 12c.025 3.086.718 5.496 2.057 7.164 1.43 1.783 3.631 2.698 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.96-.065-1.182.408-2.256 1.33-3.022.88-.73 2.082-1.168 3.576-1.302 1.126-.1 2.158-.043 3.089.17-.029-.752-.138-1.404-.334-1.953-.346-.97-.942-1.643-1.772-2.003-.9-.39-2.024-.467-3.345-.232l-.345-2.063c1.712-.287 3.248-.175 4.564.332 1.26.486 2.192 1.394 2.693 2.622.347.852.524 1.86.561 3.022l.013.397c1.244.624 2.203 1.476 2.794 2.504.758 1.317 1.079 3.016.593 4.77-.626 2.255-2.066 3.964-4.163 4.94-1.632.76-3.573 1.126-5.77 1.087zm-.012-9.76c-1.057.094-1.883.392-2.46.888-.556.478-.78 1.024-.75 1.826.035.619.345 1.12.897 1.45.577.345 1.32.48 2.096.439 1.058-.057 1.9-.46 2.5-1.198.456-.56.764-1.323.917-2.265-.934-.27-1.986-.35-3.2-.14z"/>
                   </svg>
                 </a>
               </div>
@@ -73,7 +86,7 @@ export function HeroThreeColumn() {
             className="order-1 lg:order-2 flex justify-center"
             aria-label="Profile portrait"
           >
-            <CircularPortrait />
+            <CircularPortrait portraitUrl={portraitUrl} />
           </div>
 
           {/* Right Column - Statistics */}

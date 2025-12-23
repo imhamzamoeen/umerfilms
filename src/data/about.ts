@@ -3,7 +3,7 @@
 import { Biography, Statistic } from '@/types/about';
 
 export const biography: Biography = {
-  name: 'Umer Khan',
+  name: 'Umer Naeem',
   roles: [
     'Videographer',
     'Director',
@@ -11,17 +11,17 @@ export const biography: Biography = {
     'Cinematographer'
   ],
   skills: [
-    'Commercial Video Production',
-    'Music Video Direction',
-    'Documentary Filmmaking',
-    'Color Grading',
-    'Motion Graphics'
+    'Pre-Production',
+    'Video Production',
+    'Post-Production',
+    'Script Writing',
+    'Screen Play'
   ],
-  bio: 'Professional videographer and director specializing in cinematic storytelling, commercial productions, and creative visual content.'
+  bio: 'Professional video creator with 5+ years of experience in writing, directing, and producing compelling visual content for brands, documentaries, and creative projects.'
 };
 
 export const statistics: Statistic[] = [
-  { value: '50+', label: 'Projects Done' },
-  { value: '10+', label: 'Years of Experience' },
+  { value: '80+', label: 'Projects Done' },
+  { value: '5+', label: 'Years of Experience' },
   { value: '25', label: 'Worldwide Clients' }
 ];

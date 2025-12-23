@@ -3,20 +3,21 @@
 import Link from 'next/link';
 import { PageWrapper } from '@/components/layout';
 import { ProjectCard } from '@/components/portfolio';
-import { getFeaturedProjects, getAllProjects } from '@/data/projects';
+import { getFeaturedVideos, getAllVideos } from '@/lib/videos';
+import { videosToProjects } from '@/lib/video-to-project';
 
-export function FeaturedWork() {
-  // Get featured projects
-  let featuredProjects = getFeaturedProjects();
+export async function FeaturedWork() {
+  // Get featured videos from Supabase
+  let videos = await getFeaturedVideos();
 
-  // Fallback: if no featured projects, use first 3 from all projects
-  // This ensures the section always displays content
-  if (featuredProjects.length === 0) {
-    featuredProjects = getAllProjects().slice(0, 3);
+  // Fallback: if no featured videos, use first 3 from all videos
+  if (videos.length === 0) {
+    const allVideos = await getAllVideos();
+    videos = allVideos.slice(0, 3);
   }
 
-  // Limit to 3 projects for homepage
-  const displayProjects = featuredProjects.slice(0, 3);
+  // Convert to Project format for existing components
+  const displayProjects = videosToProjects(videos).slice(0, 3);
 
   return (
     <section className="py-16 md:py-20 bg-surface">
@@ -26,15 +27,21 @@ export function FeaturedWork() {
         </h2>
 
         {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
-          {displayProjects.map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              priority={index < 3} // Optimize first 3 images
-            />
-          ))}
-        </div>
+        {displayProjects.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-12">
+            {displayProjects.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                priority={index < 3} // Optimize first 3 images
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-12 text-gray-400 mb-12">
+            <p>No projects available yet.</p>
+          </div>
+        )}
 
         {/* View All Work Link */}
         <div className="text-center">

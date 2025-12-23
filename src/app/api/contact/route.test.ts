@@ -1,18 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { NextRequest } from 'next/server';
 
-// Create mock send function using vi.hoisted
-const { mockSend } = vi.hoisted(() => ({
-  mockSend: vi.fn(),
+// Create mock sendEmail function using vi.hoisted
+const { mockSendEmail } = vi.hoisted(() => ({
+  mockSendEmail: vi.fn(),
 }));
 
-// Mock Resend
-vi.mock('resend', () => ({
-  Resend: vi.fn().mockImplementation(() => ({
-    emails: {
-      send: mockSend,
-    },
-  })),
+// Mock email module
+vi.mock('@/lib/email', () => ({
+  sendEmail: mockSendEmail,
 }));
 
 import { POST } from './route';
@@ -27,7 +23,7 @@ describe('POST /api/contact', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     // Set default successful response
-    mockSend.mockResolvedValue({ data: { id: 'test-id' }, error: null });
+    mockSendEmail.mockResolvedValue({ success: true });
   });
 
   it('returns 400 for missing name field', async () => {
@@ -97,7 +93,7 @@ describe('POST /api/contact', () => {
 
     await POST(request);
 
-    expect(mockSend).toHaveBeenCalledWith(
+    expect(mockSendEmail).toHaveBeenCalledWith(
       expect.objectContaining({
         subject: 'New Portfolio Inquiry: Commercial',
       })
@@ -121,9 +117,9 @@ describe('POST /api/contact', () => {
 
   it('returns 500 on email service error', async () => {
     // Override the default mock for this test
-    mockSend.mockResolvedValueOnce({
-      data: null,
-      error: { message: 'API key invalid' },
+    mockSendEmail.mockResolvedValueOnce({
+      success: false,
+      error: 'SMTP connection failed',
     });
 
     const request = createRequest({
@@ -165,7 +161,7 @@ describe('POST /api/contact', () => {
 
     await POST(request);
 
-    expect(mockSend).toHaveBeenCalledWith(
+    expect(mockSendEmail).toHaveBeenCalledWith(
       expect.objectContaining({
         html: expect.stringContaining('<p><strong>Name:</strong> Test User</p>'),
       })
@@ -197,12 +193,12 @@ describe('POST /api/contact', () => {
 
     await POST(request);
 
-    expect(mockSend).toHaveBeenCalledWith(
+    expect(mockSendEmail).toHaveBeenCalledWith(
       expect.objectContaining({
         html: expect.stringContaining('&lt;script&gt;alert(&quot;xss&quot;)&lt;/script&gt;'),
       })
     );
-    expect(mockSend).toHaveBeenCalledWith(
+    expect(mockSendEmail).toHaveBeenCalledWith(
       expect.objectContaining({
         html: expect.stringContaining('&lt;strong&gt;message&lt;/strong&gt;'),
       })

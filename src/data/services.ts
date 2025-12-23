@@ -1,5 +1,5 @@
 import { IconType } from 'react-icons';
-import { BsPencil, BsCodeSlash, BsDisplay } from 'react-icons/bs';
+import { BsLightbulb, BsCameraVideo, BsFilm } from 'react-icons/bs';
 
 export interface Service {
     id: string;
@@ -11,27 +11,27 @@ export interface Service {
 
 export const services: Service[] = [
     {
-        id: 'design',
-        title: 'Design',
+        id: 'pre-production',
+        title: 'Pre-Production',
         description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut',
-        icon: BsPencil,
+            'Concept development, script writing, storyboarding, location scouting, and planning to ensure your vision is perfectly captured.',
+        icon: BsLightbulb,
         number: '01',
     },
     {
-        id: 'development',
-        title: 'Development',
+        id: 'video-production',
+        title: 'Video Production',
         description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et',
-        icon: BsCodeSlash,
+            'Professional filming with high-end equipment, creative direction, and cinematography that brings your story to life.',
+        icon: BsCameraVideo,
         number: '02',
     },
     {
-        id: 'marketing',
-        title: 'Marketing',
+        id: 'post-production',
+        title: 'Post-Production',
         description:
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore',
-        icon: BsDisplay,
+            'Expert editing, color grading, sound design, motion graphics, and final delivery to create polished, impactful content.',
+        icon: BsFilm,
         number: '03',
     },
 ];

@@ -3,6 +3,8 @@
 import { Metadata } from 'next';
 import { PageWrapper } from '@/components/layout';
 import { WorkPageClient } from './WorkPageClient';
+import { getAllVideos } from '@/lib/videos';
+import { videosToProjects } from '@/lib/video-to-project';
 
 export const metadata: Metadata = {
   title: 'Work - UmerFilms',
@@ -13,7 +15,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function WorkPage() {
+export const revalidate = 60; // Revalidate every 60 seconds
+
+export default async function WorkPage() {
+  const videos = await getAllVideos();
+  const projects = videosToProjects(videos);
+
   return (
     <PageWrapper>
       <div className="py-16 md:py-20">
@@ -21,7 +28,7 @@ export default function WorkPage() {
           Work
         </h1>
 
-        <WorkPageClient />
+        <WorkPageClient initialProjects={projects} />
       </div>
     </PageWrapper>
   );

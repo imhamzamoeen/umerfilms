@@ -36,7 +36,7 @@ export default function BlogCard({ post }: BlogCardProps) {
       <div className="pt-4">
         {/* Meta: Author & Date */}
         <p className="mb-2 text-xs uppercase tracking-wide text-gray-500">
-          By Admin &bull; {formattedDate}
+          By {post.author?.name || 'Admin'} &bull; {formattedDate}
         </p>
 
         {/* Title */}

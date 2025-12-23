@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
-
-// Initialize Resend client once (performance optimization)
-const resend = new Resend(process.env.RESEND_API_KEY);
+import { sendEmail } from '@/lib/email';
 
 interface ContactFormData {
   name: string;
@@ -65,15 +62,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 6. Send email via Resend
+    // 6. Send email via nodemailer
     const timestamp = new Date().toLocaleString('en-US', {
       dateStyle: 'full',
       timeStyle: 'short',
     });
 
-    const { error } = await resend.emails.send({
-      from: process.env.RESEND_FROM_EMAIL!,
-      to: process.env.RESEND_TO_EMAIL!,
+    const result = await sendEmail({
+      to: process.env.EMAIL_TO!,
       subject: `New Portfolio Inquiry: ${escapeHtml(projectType)}`,
       html: `
         <h2>New Contact Form Submission</h2>
@@ -87,8 +83,8 @@ export async function POST(request: NextRequest) {
       `,
     });
 
-    if (error) {
-      console.error('Resend error:', error);
+    if (!result.success) {
+      console.error('Email error:', result.error);
       return NextResponse.json(
         { success: false, message: 'Failed to send message' },
         { status: 500 }

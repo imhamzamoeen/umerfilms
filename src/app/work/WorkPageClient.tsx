@@ -2,19 +2,25 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { CategoryFilter, ProjectGrid } from '@/components/portfolio';
-import { getAllProjects, getProjectsByCategory } from '@/data/projects';
-import { Category } from '@/types/project';
+import { Project, Category } from '@/types/project';
 
 const categories: string[] = ['All', 'Commercial', 'Music Video', 'Wedding', 'Short Film', 'Personal'];
 
-export function WorkPageClient() {
+interface WorkPageClientProps {
+  initialProjects: Project[];
+}
+
+export function WorkPageClient({ initialProjects }: WorkPageClientProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
-  const filteredProjects = selectedCategory === 'All'
-    ? getAllProjects()
-    : getProjectsByCategory(selectedCategory as Category);
+  const filteredProjects = useMemo(() => {
+    if (selectedCategory === 'All') {
+      return initialProjects;
+    }
+    return initialProjects.filter(p => p.category === selectedCategory);
+  }, [initialProjects, selectedCategory]);
 
   return (
     <>

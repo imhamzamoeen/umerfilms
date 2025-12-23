@@ -9,48 +9,48 @@ export interface TimelineEntry {
 
 export const timeline: TimelineEntry[] = [
     {
-        id: 'current',
-        year: '2023 - Present',
-        position: 'Lead Cinematographer',
+        id: 'bewhoop-2025',
+        year: '2025',
+        position: 'Video Content Creator',
+        company: 'BeWhoop App',
+        description:
+            'Creating engaging video content and posts for the BeWhoop mobile application, delivering high-quality promotional and social media content.',
+        type: 'work',
+    },
+    {
+        id: 'ffc-2025',
+        year: '2025',
+        position: 'Video Coverage',
+        company: 'FFC LIMITED',
+        description:
+            'Providing professional video coverage services for FFC Limited, capturing corporate events, product showcases, and brand content.',
+        type: 'work',
+    },
+    {
+        id: 'documentary-2024',
+        year: '2024',
+        position: 'Documentary Filmmaker',
+        company: 'International NGO',
+        description:
+            'Produced a compelling documentary for an international non-governmental organization, showcasing impactful stories and social initiatives.',
+        type: 'work',
+    },
+    {
+        id: 'jewelry-brand-2024',
+        year: '2024',
+        position: 'Brand Video Production',
+        company: 'Online Jewelry Brand',
+        description:
+            'First major brand collaboration, creating stunning product videos and promotional content for an online jewelry brand.',
+        type: 'work',
+    },
+    {
+        id: 'started-2020',
+        year: '2020',
+        position: 'Started My Page',
         company: 'UmerFilms',
         description:
-            'Leading high-end commercial and documentary productions with a focus on cinematic storytelling and visual excellence. Managing full production pipelines from pre-visualization to final color grading.',
+            'Launched UmerFilms as my personal brand, beginning my journey as a professional video creator specializing in pre-production, video production, and post-production services.',
         type: 'work',
-    },
-    {
-        id: 'director-2020',
-        year: '2020 - 2023',
-        position: 'Director of Photography',
-        company: 'Creative Vision Studios',
-        description:
-            'Directed photography for award-winning commercials and music videos. Collaborated with international brands to deliver visually stunning campaigns that drove engagement.',
-        type: 'work',
-    },
-    {
-        id: 'award-2022',
-        year: '2022',
-        position: 'Best Cinematography Award',
-        company: 'International Film Festival',
-        description:
-            'Recognized for outstanding cinematography in documentary filmmaking, specifically for the short film "Shadows of Light" which explored urban architecture.',
-        type: 'award',
-    },
-    {
-        id: 'cinematographer-2018',
-        year: '2018 - 2020',
-        position: 'Freelance Cinematographer',
-        company: 'Various Productions',
-        description:
-            'Worked on diverse projects including commercials, documentaries, and narrative shorts across multiple countries. Specialized in natural light cinematography and handheld camera movement.',
-        type: 'work',
-    },
-    {
-        id: 'education-2018',
-        year: '2015 - 2018',
-        position: 'Film & Media Production',
-        company: 'University of Arts',
-        description:
-            'Bachelor of Arts in Film Production with specialization in cinematography and visual storytelling. Graduated with Honors.',
-        type: 'education',
     },
 ];

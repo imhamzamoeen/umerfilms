@@ -64,7 +64,17 @@
       "Bash(node:*)",
       "Bash(npm:*)",
       "Bash(timeout 10 npx:*)",
-      "Bash(claude mcp list:*)"
+      "Bash(claude mcp list:*)",
+      "Bash(claude mcp auth --help:*)",
+      "Bash(claude mcp login --help:*)",
+      "Bash(claude mcp --help:*)",
+      "Bash(claude mcp auth:*)",
+      "Bash(claude mcp login:*)",
+      "Bash(tasklist:*)",
+      "Bash(Get-ChildItem -Path \"c:\\\\laragon\\\\www\\\\UmerFilms\\\\src\" -Recurse -Include *.ts,*.tsx)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(timeout /t 8 /nobreak)",
+      "Bash(find:*)"
     ]
   }
 }
